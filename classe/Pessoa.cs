@@ -15,11 +15,17 @@ namespace classe
 
         public void SetarAnoNascimento(int anoNascimento)
         {
+            if (anoNascimento == 0)
+                throw new Exception("Ano nascimento não pode ser zero!");
+
             Idade = DateTime.Now.Year - anoNascimento;
         }
 
         public void SetarNomeCompleto(string nomeCompleto)
         {
+            if (string.IsNullOrEmpty(nomeCompleto))
+                throw new Exception("Nome não pode estar nulo ou vazio!");
+
             Nome = nomeCompleto.Substring(0, nomeCompleto.IndexOf(" "));
             Sobrenome = nomeCompleto.Substring(nomeCompleto.IndexOf(" ") + 1);
         }

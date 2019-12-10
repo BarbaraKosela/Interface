@@ -8,15 +8,15 @@ namespace classe
         {
             Console.WriteLine("inicio");
 
+            Pessoa pessoa = new Pessoa();
             Console.WriteLine("Digite ano de nascimento: ");
             int anoNascimento = Convert.ToInt32(Console.ReadLine());
+            pessoa.SetarAnoNascimento(anoNascimento);
 
             Console.WriteLine("Digite seu nome completo");
             string nomeCompleto = Console.ReadLine();
-
-            Pessoa pessoa = new Pessoa();
-            pessoa.SetarAnoNascimento(anoNascimento);
             pessoa.SetarNomeCompleto(nomeCompleto);
+
             pessoa.Exibir();
 
             Console.WriteLine("fim");
