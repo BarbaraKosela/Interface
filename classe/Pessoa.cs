@@ -6,40 +6,30 @@ using System.Threading.Tasks;
 
 namespace classe
 {
-    public class Pessoa
+    public class Pessoa : IPessoa
     {
         public string Nome { get; private set; }
         public string Sobrenome { get; private set; }
-        public Sexo sexoInformado { get; private set; }
-        public Pessoa(string nome, string sobrenome, Sexo sexo)
-        {
-            Nome = nome;
-            Sobrenome = sobrenome;
-            sexoInformado = sexo;
+        public Sexo Sexo { get; protected set; }
+        public int Idade { get; private set; }
 
-            //Validar();
-        }
-        public virtual void MudarNome(string nome, string sobrenome)
+        public void SetarAnoNascimento(int anoNascimento)
         {
-            Nome = nome;
-            Sobrenome = sobrenome;
+            anoNascimento = 2019 - anoNascimento;
+            Console.WriteLine(anoNascimento);
+        }
 
-            //Validar();
-        }
-        public virtual void Exibir()
+        public void SetarNomeCompleto(string nomeCompleto)
         {
-            Console.WriteLine($"\nSeu resultado é: " + Nome.Trim() + " " + Sobrenome.Trim() + " com o sexo: " + sexoInformado);
-        }
-        #region Regra de negocio
-        protected bool Validar(string nomeCompleto)
-        {
-            if (string.IsNullOrEmpty(nomeCompleto))
+            while (!nomeCompleto.Contains(" "))
             {
-                Console.WriteLine("Nome completo deve ser preenchido");
-                return false;
+                Console.WriteLine("Digite novamente, nome não está completo!");
+                nomeCompleto = Console.ReadLine();
             }
-            return true;
+
+
+
+            Console.WriteLine(nomeCompleto);
         }
-        #endregion
     }
 }

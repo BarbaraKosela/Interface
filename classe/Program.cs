@@ -8,28 +8,16 @@ namespace classe
         {
             Console.WriteLine("inicio");
 
-            Console.WriteLine("Digite seu nome completo: ");
-            string nomeCompleto = Console.ReadLine().Trim();
+            Console.WriteLine("Digite ano de nascimento: ");
+            int anoNascimento = Convert.ToInt32(Console.ReadLine());
 
-            while(!nomeCompleto.Contains(" "))
-            {
-                Console.WriteLine("Digite nome completo novamente!");
-                nomeCompleto = Console.ReadLine();
-            }
-            Mulher mulher = new Mulher(nomeCompleto);
-            mulher.MudarNome(nomeCompleto);
-            mulher.Exibir(nomeCompleto);
-            /*
-            Console.WriteLine("Digite nome novamente para mudar: ");
-            nome = Console.ReadLine();
-            Console.WriteLine("Digite sobrenome novamente para mudar: ");
-            sobrenome = Console.ReadLine();
+            Console.WriteLine("Digite seu nome completo");
+            string nomeCompleto = Console.ReadLine();
 
-            Pessoa pessoa = new Pessoa(nome, sobrenome);
-            pessoa.Exibir();
+            Pessoa pessoa = new Pessoa();
+            pessoa.SetarAnoNascimento(anoNascimento);
+            pessoa.SetarNomeCompleto(nomeCompleto);
 
-            pessoa.MudarNome(nome, sobrenome);
-            pessoa.ExibirNome();*/
             Console.WriteLine("fim");
             Console.ReadLine();
 
