@@ -17,6 +17,7 @@ namespace classe
             Pessoa pessoa = new Pessoa();
             pessoa.SetarAnoNascimento(anoNascimento);
             pessoa.SetarNomeCompleto(nomeCompleto);
+            pessoa.Exibir();
 
             Console.WriteLine("fim");
             Console.ReadLine();

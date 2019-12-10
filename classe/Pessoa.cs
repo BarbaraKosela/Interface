@@ -15,21 +15,18 @@ namespace classe
 
         public void SetarAnoNascimento(int anoNascimento)
         {
-            anoNascimento = 2019 - anoNascimento;
-            Console.WriteLine(anoNascimento);
+            Idade = DateTime.Now.Year - anoNascimento;
         }
 
         public void SetarNomeCompleto(string nomeCompleto)
         {
-            while (!nomeCompleto.Contains(" "))
-            {
-                Console.WriteLine("Digite novamente, nome não está completo!");
-                nomeCompleto = Console.ReadLine();
-            }
+            Nome = nomeCompleto.Substring(0, nomeCompleto.IndexOf(" "));
+            Sobrenome = nomeCompleto.Substring(nomeCompleto.IndexOf(" ") + 1);
+        }
 
-
-
-            Console.WriteLine(nomeCompleto);
+        public void Exibir()
+        {
+            Console.WriteLine($"Calculo de idade: {Idade}, nome completo: {Nome} {Sobrenome}");
         }
     }
 }
