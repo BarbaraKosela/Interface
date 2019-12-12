@@ -7,10 +7,11 @@ namespace classe
         static void Main(string[] args)
         {
             Pessoa pessoa;
+            string nomeFornecido;
+            int anoNascimentoFornecido;
             bool continuePerguntas = true;
+
             Console.WriteLine("inicio");
-            string nomeCompleto = "";
-            int dataNascimento = 0;
 
             while (continuePerguntas)
             {
@@ -20,21 +21,21 @@ namespace classe
                 switch (escolhaHomemMulher)
                 {
                     case 1:
-                        PerguntaNome(nomeCompleto);
-                        PerguntasAnoNascimento(dataNascimento);
-                        pessoa = new Mulher(nomeCompleto);
-                        pessoa.SetarAnoNascimento(dataNascimento);
+                        nomeFornecido = PerguntaNome();
+                        anoNascimentoFornecido = PerguntasAnoNascimento();
+                        
+                        pessoa = new Mulher(nomeFornecido);
+                        pessoa.SetarAnoNascimento(anoNascimentoFornecido);
                         pessoa.Exibir();
-                        continuePerguntas = false;
+                        
                         break;
 
                     case 2:
-                        PerguntaNome(nomeCompleto);
-                        PerguntasAnoNascimento(dataNascimento);
-                        pessoa = new Homem(nomeCompleto);
-                        pessoa.SetarAnoNascimento(dataNascimento);
+                        nomeFornecido = PerguntaNome();
+                        anoNascimentoFornecido = PerguntasAnoNascimento();
+                        pessoa = new Homem(nomeFornecido);
+                        pessoa.SetarAnoNascimento(anoNascimentoFornecido);
                         pessoa.Exibir();
-                        continuePerguntas = false;
                         break;
 
                     case 3:
@@ -42,7 +43,6 @@ namespace classe
                         break;
 
                     default:
-                        continuePerguntas = true;
                         Console.WriteLine("Este comando não é válido");
                         break;
                 }
@@ -50,15 +50,17 @@ namespace classe
             Console.WriteLine("fim");
             Console.ReadLine();
         }
-        static void PerguntaNome(string nomeCompleto)
+        static string PerguntaNome()
         {
             Console.WriteLine("Digite seu nome completo: ");
-            nomeCompleto = Console.ReadLine();
+            string nomeCompleto = Console.ReadLine();
+            return nomeCompleto;
         }
-        static void PerguntasAnoNascimento(int dataNascimento)
+        static int PerguntasAnoNascimento()
         {
             Console.WriteLine("Digite seu ano de nascimento: ");
-            dataNascimento = Convert.ToInt32(Console.ReadLine());
+            int dataNascimento = Convert.ToInt32(Console.ReadLine());
+            return dataNascimento;
         }
     }
 }
