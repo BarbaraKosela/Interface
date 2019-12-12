@@ -6,41 +6,57 @@ namespace classe
     {
         static void Main(string[] args)
         {
+            Pessoa pessoa;
+            bool continuePerguntas = true;
             Console.WriteLine("inicio");
+            string nomeCompleto = "";
+            int dataNascimento = 0;
 
-            Console.WriteLine("Digite 1 se for mulher | Digite 2 se for homem: | Digite 3 para sair");
-            int escolhaHomemMulher = Convert.ToInt32(Console.ReadLine());
-
-            while(escolhaHomemMulher < 3) 
-            switch (escolhaHomemMulher)
+            while (continuePerguntas)
             {
-                case 1:
-                //PerguntasUsuario(nomeCompleto, dataNascimento);
-                //Pessoa mulher = new Mulher(nomeCompleto);
-                //mulher.SetarAnoNascimento(dataNascimento);
-                //Console.WriteLine($"Seu nome é: {mulher.Nome}. Sua idade é: {mulher.Idade}");
-                break;
+                Console.WriteLine("Digite 1 se for mulher | Digite 2 se for homem: | Digite 3 para sair");
+                int escolhaHomemMulher = Convert.ToInt32(Console.ReadLine());
 
-                case 2:
-                //PerguntasUsuario(nomeCompleto, dataNascimento);
-                //Pessoa homem = new Homem(nomeCompleto);
-                //homem.SetarAnoNascimento(dataNascimento);
-                //Console.WriteLine($"Seu nome é: {homem.Nome}. Sua idade é: {homem.Idade}");
-                break;
+                switch (escolhaHomemMulher)
+                {
+                    case 1:
+                        PerguntaNome(nomeCompleto);
+                        PerguntasAnoNascimento(dataNascimento);
+                        pessoa = new Mulher(nomeCompleto);
+                        pessoa.SetarAnoNascimento(dataNascimento);
+                        pessoa.Exibir();
+                        continuePerguntas = false;
+                        break;
 
-                case 3:
-                    break;
+                    case 2:
+                        PerguntaNome(nomeCompleto);
+                        PerguntasAnoNascimento(dataNascimento);
+                        pessoa = new Homem(nomeCompleto);
+                        pessoa.SetarAnoNascimento(dataNascimento);
+                        pessoa.Exibir();
+                        continuePerguntas = false;
+                        break;
 
-                default:
-                    break;
+                    case 3:
+                        continuePerguntas = false;
+                        break;
+
+                    default:
+                        continuePerguntas = true;
+                        Console.WriteLine("Este comando não é válido");
+                        break;
+                }
             }
             Console.WriteLine("fim");
             Console.ReadLine();
         }
-        static void PerguntasUsuario(string nomeCompleto, int dataNascimento)
+        static void PerguntaNome(string nomeCompleto)
         {
             Console.WriteLine("Digite seu nome completo: ");
             nomeCompleto = Console.ReadLine();
+        }
+        static void PerguntasAnoNascimento(int dataNascimento)
+        {
             Console.WriteLine("Digite seu ano de nascimento: ");
             dataNascimento = Convert.ToInt32(Console.ReadLine());
         }

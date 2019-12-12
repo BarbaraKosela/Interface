@@ -20,7 +20,6 @@ namespace classe
 
             Idade = DateTime.Now.Year - anoNascimento;
         }
-
         public void SetarNomeCompleto(string nomeCompleto)
         {
             if (string.IsNullOrEmpty(nomeCompleto))
@@ -29,16 +28,9 @@ namespace classe
             Nome = nomeCompleto.Substring(0, nomeCompleto.IndexOf(" "));
             Sobrenome = nomeCompleto.Substring(nomeCompleto.IndexOf(" ") + 1);
         }
-        //public void PerguntasUsuario(string nomeCompleto, int dataNascimento)
-        //{
-        //    Console.WriteLine("Digite seu nome completo: ");
-        //    nomeCompleto = Console.ReadLine();
-        //    Console.WriteLine("Digite seu ano de nascimento: ");
-        //    dataNascimento = Convert.ToInt32(Console.ReadLine());
-        //}
         public void Exibir()
         {
-            Console.WriteLine($"Calculo de idade: {Idade}, nome completo: {Nome} {Sobrenome}");
+            Console.WriteLine($"Seu nome é: {Nome}. Sua idade é: {Idade}");
         }
     }
 }
