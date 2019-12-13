@@ -31,7 +31,7 @@ namespace classe
         }
         private void ValidarIdade(int anoNascimento)
         {
-            if (anoNascimento == 0)
+            if (anoNascimento <= 0)
                 throw new Exception("Ano nascimento não pode ser zero!");
             else if (anoNascimento > DateTime.Now.Year)
                 throw new Exception("O ano de nascimento não pode ser superior ao ano atual!");

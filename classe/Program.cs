@@ -76,8 +76,15 @@ namespace classe
         }
         static int PerguntasAnoNascimento()
         {
+            int anoNascimento;
+
             Console.WriteLine("Digite seu ano de nascimento: ");
-            int anoNascimento = Convert.ToInt32(Console.ReadLine());
+            string variavel = Console.ReadLine();
+
+            bool sucesso = int.TryParse(variavel, out anoNascimento);
+
+            if (!sucesso)
+                throw new Exception("Erro! Não é aceito letras para ano de nascimento!");
 
             return anoNascimento;
         }
