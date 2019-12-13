@@ -16,29 +16,45 @@ namespace classe
             while (continuePerguntas)
             {
                 Console.WriteLine("Digite 1 se for mulher | Digite 2 se for homem: | Digite 3 para sair");
-                int escolhaHomemMulher = Convert.ToInt32(Console.ReadLine());
+                string escolhaHomemMulher = Console.ReadLine();
 
                 switch (escolhaHomemMulher)
                 {
-                    case 1:
-                        nomeFornecido = PerguntaNome();
-                        anoNascimentoFornecido = PerguntasAnoNascimento();
-                        
-                        pessoa = new Mulher(nomeFornecido);
-                        pessoa.SetarAnoNascimento(anoNascimentoFornecido);
-                        pessoa.Exibir();
-                        
+                    case "1":
+                        try
+                        {
+                            nomeFornecido = PerguntaNome();
+                            anoNascimentoFornecido = PerguntasAnoNascimento();
+
+                            pessoa = new Mulher(nomeFornecido);
+                            pessoa.SetarAnoNascimento(anoNascimentoFornecido);
+
+                            Console.WriteLine(pessoa.ToString());
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
                         break;
 
-                    case 2:
-                        nomeFornecido = PerguntaNome();
-                        anoNascimentoFornecido = PerguntasAnoNascimento();
-                        pessoa = new Homem(nomeFornecido);
-                        pessoa.SetarAnoNascimento(anoNascimentoFornecido);
-                        pessoa.Exibir();
+                    case "2":
+                        try
+                        {
+                            nomeFornecido = PerguntaNome();
+                            anoNascimentoFornecido = PerguntasAnoNascimento();
+
+                            pessoa = new Homem(nomeFornecido);
+                            pessoa.SetarAnoNascimento(anoNascimentoFornecido);
+
+                            Console.WriteLine(pessoa.ToString());
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
                         break;
 
-                    case 3:
+                    case "3":
                         continuePerguntas = false;
                         break;
 
@@ -46,6 +62,7 @@ namespace classe
                         Console.WriteLine("Este comando não é válido");
                         break;
                 }
+
             }
             Console.WriteLine("fim");
             Console.ReadLine();
@@ -54,13 +71,15 @@ namespace classe
         {
             Console.WriteLine("Digite seu nome completo: ");
             string nomeCompleto = Console.ReadLine();
+
             return nomeCompleto;
         }
         static int PerguntasAnoNascimento()
         {
             Console.WriteLine("Digite seu ano de nascimento: ");
-            int dataNascimento = Convert.ToInt32(Console.ReadLine());
-            return dataNascimento;
+            int anoNascimento = Convert.ToInt32(Console.ReadLine());
+
+            return anoNascimento;
         }
     }
 }

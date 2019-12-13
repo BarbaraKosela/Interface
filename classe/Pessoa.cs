@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace classe
 {
@@ -15,22 +11,36 @@ namespace classe
 
         public void SetarAnoNascimento(int anoNascimento)
         {
-            if (anoNascimento == 0)
-                throw new Exception("Ano nascimento não pode ser zero!");
+            ValidarIdade(anoNascimento);
 
             Idade = DateTime.Now.Year - anoNascimento;
         }
         public void SetarNomeCompleto(string nomeCompleto)
         {
-            if (string.IsNullOrEmpty(nomeCompleto))
-                throw new Exception("Nome não pode estar nulo ou vazio!");
+            ValidarNome(nomeCompleto);
 
             Nome = nomeCompleto.Substring(0, nomeCompleto.IndexOf(" "));
             Sobrenome = nomeCompleto.Substring(nomeCompleto.IndexOf(" ") + 1);
         }
-        public void Exibir()
+        private void ValidarNome(string nomeCompleto)
         {
-            Console.WriteLine($"Seu nome é: {Nome}. Sua idade é: {Idade}");
+            if (!nomeCompleto.Trim().Contains(" "))
+                throw new Exception("Nome deve ser completo!");
+            else if (string.IsNullOrEmpty(nomeCompleto))
+                throw new Exception("Nome não pode estar nulo ou vazio!");
+        }
+        private void ValidarIdade(int anoNascimento)
+        {
+            if (anoNascimento == 0)
+                throw new Exception("Ano nascimento não pode ser zero!");
+            else if (anoNascimento > DateTime.Now.Year)
+                throw new Exception("O ano de nascimento não pode ser superior ao ano atual!");
+            else if (anoNascimento < 1900)
+                throw new Exception("Ano de nascimento está inválido, deve ser superior a 1900");
+        }
+        public override string ToString()
+        {
+            return $"Seu nome é: {Nome}, sua idade é: {Idade}";
         }
     }
 }
