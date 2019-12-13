@@ -26,6 +26,7 @@ namespace classe
         {
             if (!nomeCompleto.Trim().Contains(" "))
                 throw new Exception("Nome deve ser completo!");
+
             else if (string.IsNullOrEmpty(nomeCompleto))
                 throw new Exception("Nome não pode estar nulo ou vazio!");
         }
@@ -33,8 +34,10 @@ namespace classe
         {
             if (anoNascimento <= 0)
                 throw new Exception("Ano nascimento não pode ser zero!");
+
             else if (anoNascimento > DateTime.Now.Year)
                 throw new Exception("O ano de nascimento não pode ser superior ao ano atual!");
+
             else if (anoNascimento < 1900)
                 throw new Exception("Ano de nascimento está inválido, deve ser superior a 1900");
         }

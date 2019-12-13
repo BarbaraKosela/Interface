@@ -32,7 +32,7 @@ namespace classe
                             Console.WriteLine(pessoa.ToString());
                         }
                         catch (Exception e)
-                        {
+                         {
                             Console.WriteLine(e.Message);
                         }
                         break;
