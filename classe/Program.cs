@@ -25,14 +25,15 @@ namespace classe
                         {
                             nomeFornecido = PerguntaNome();
                             anoNascimentoFornecido = PerguntasAnoNascimento();
+                            PerguntaTipoVestuario();
+                            PerguntaCorVestuario();
 
                             pessoa = new Mulher(nomeFornecido);
                             pessoa.SetarAnoNascimento(anoNascimentoFornecido);
-
                             Console.WriteLine(pessoa.ToString());
                         }
                         catch (Exception e)
-                         {
+                        {
                             Console.WriteLine(e.Message);
                         }
                         break;
@@ -62,7 +63,6 @@ namespace classe
                         Console.WriteLine("Este comando não é válido");
                         break;
                 }
-
             }
             Console.WriteLine("fim");
             Console.ReadLine();
@@ -87,6 +87,50 @@ namespace classe
                 throw new Exception("Erro! Não é aceito letras para ano de nascimento!");
 
             return anoNascimento;
+        }
+        static string PerguntaTipoVestuario()
+        {
+            Console.WriteLine("Agora, seu vestuário.");
+            Console.WriteLine("Digite 1 para camisetas | Digite 2 para calça.");
+            string escolherVestuario = Console.ReadLine();
+            PecaRoupa peca = new PecaRoupa();
+
+            switch (escolherVestuario)
+            {
+                case "1":
+                    peca.DefinirPecaRoupa(TipoPecaRoupa.camisa);
+                    ;
+                    break;
+                case "2":
+                    peca.DefinirPecaRoupa(TipoPecaRoupa.calça);
+                    break;
+                default:
+                    Console.WriteLine("Este comando não é válido");
+                    break;
+            }
+            return escolherVestuario;
+        }
+        static string PerguntaCorVestuario()
+        {
+            Console.WriteLine("Digite 1 para branco | Digite 2 para colorido | Digite 3 para preto");
+            string escolherCorVestuario = Console.ReadLine();
+            PecaRoupa peca = new PecaRoupa();
+            switch (escolherCorVestuario)
+            {
+                case "1":
+                    peca.DefinirCorRoupa(CorPecaRoupa.branca);
+                    break;
+                case "2":
+                    peca.DefinirCorRoupa(CorPecaRoupa.colorida);
+                    break;
+                case "3":
+                    peca.DefinirCorRoupa(CorPecaRoupa.preta);
+                    break;
+                default:
+                    Console.WriteLine("Este comando não é válido");
+                    break;
+            }
+            return escolherCorVestuario;
         }
     }
 }

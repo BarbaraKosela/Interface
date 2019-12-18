@@ -2,13 +2,12 @@
 
 namespace classe
 {
-    abstract class Pessoa : IPessoa
+    abstract class Pessoa : PecaRoupa, IPessoa
     {
         public string Nome { get; private set; }
         public string Sobrenome { get; private set; }
         public Sexo Sexo { get; protected set; }
         public int Idade { get; private set; }
-
         public void SetarAnoNascimento(int anoNascimento)
         {
             ValidarIdade(anoNascimento);
@@ -22,6 +21,12 @@ namespace classe
             Nome = nomeCompleto.Substring(0, nomeCompleto.IndexOf(" "));
             Sobrenome = nomeCompleto.Substring(nomeCompleto.IndexOf(" ") + 1);
         }
+        public override string ToString()
+        {
+            return $"Seu nome é: {Nome}, sua idade é: {Idade}, seu sexo é: {Sexo}, sua roupa é da cor: {CorPeca}, e a peça é: {TipoPeca}";
+        }
+
+        #region Validações
         private void ValidarNome(string nomeCompleto)
         {
             if (!nomeCompleto.Trim().Contains(" "))
@@ -41,9 +46,6 @@ namespace classe
             else if (anoNascimento < 1900)
                 throw new Exception("Ano de nascimento está inválido, deve ser superior a 1900");
         }
-        public override string ToString()
-        {
-            return $"Seu nome é: {Nome}, sua idade é: {Idade}";
-        }
+        #endregion
     }
 }

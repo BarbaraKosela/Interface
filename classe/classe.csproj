@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="CorPecaRoupa.cs" />
     <Compile Include="Homem.cs" />
+    <Compile Include="IPecaRoupa.cs" />
     <Compile Include="IPessoa.cs" />
     <Compile Include="IRoupa.cs" />
     <Compile Include="Mulher.cs" />

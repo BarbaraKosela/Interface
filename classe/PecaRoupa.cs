@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 
 namespace classe
 {
-    public class PecaRoupa : IRoupa
+    class PecaRoupa : IPecaRoupa
     {
         public TipoPecaRoupa TipoPeca { get; protected set; }
         public CorPecaRoupa CorPeca { get; protected set; }
 
-        public void DefinirCorPecaRoupa(CorPecaRoupa corPeca)
+        public IPecaRoupa DefinirCorRoupa(CorPecaRoupa cor)
         {
-            CorPeca = corPeca;
+            this.CorPeca = cor;
+            return this;
         }
 
-        public PecaRoupa DefinirPecaRoupa(TipoPecaRoupa pecaRoupa)
+        public IPecaRoupa DefinirPecaRoupa(TipoPecaRoupa tipo)
         {
-            PecaRoupa peca = new PecaRoupa();
-            TipoPeca = pecaRoupa;
-            return peca;
+            this.TipoPeca = tipo;
+            return this;
         }
     }
 }

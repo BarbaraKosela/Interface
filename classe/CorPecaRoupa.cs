@@ -5,7 +5,7 @@ namespace classe
     public enum CorPecaRoupa
     {
         [Description("Branca")]
-        branco = 0,
+        branca = 0,
         [Description("Preta")]
         preta = 1,
         [Description("Colorida")]
