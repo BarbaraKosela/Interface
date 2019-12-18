@@ -8,6 +8,7 @@ namespace classe
         public string Sobrenome { get; private set; }
         public Sexo Sexo { get; protected set; }
         public int Idade { get; private set; }
+        public PecaRoupa PecaRoupas { get; protected set; }
         public void SetarAnoNascimento(int anoNascimento)
         {
             ValidarIdade(anoNascimento);
@@ -23,7 +24,7 @@ namespace classe
         }
         public override string ToString()
         {
-            return $"Seu nome é: {Nome}, sua idade é: {Idade}, seu sexo é: {Sexo}, sua roupa é da cor: {CorPeca}, e a peça é: {TipoPeca}";
+            return $"Seu nome é: {Nome}, sua idade é: {Idade}, seu sexo é: {Sexo}, a peça é: {PecaRoupas.TipoPeca}, e sua roupa é da cor: {PecaRoupas.CorPeca}";
         }
 
         #region Validações

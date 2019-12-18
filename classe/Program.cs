@@ -10,6 +10,7 @@ namespace classe
             string nomeFornecido;
             int anoNascimentoFornecido;
             bool continuePerguntas = true;
+            IPecaRoupa pecaRoupa;
 
             Console.WriteLine("inicio");
 
@@ -25,10 +26,15 @@ namespace classe
                         {
                             nomeFornecido = PerguntaNome();
                             anoNascimentoFornecido = PerguntasAnoNascimento();
-                            PerguntaTipoVestuario();
-                            PerguntaCorVestuario();
+
+                            PecaRoupa peca = new PecaRoupa();
+
+                            pecaRoupa = PerguntaTipoVestuario(peca);
+                            pecaRoupa = PerguntaCorVestuario(peca);
 
                             pessoa = new Mulher(nomeFornecido);
+                            ((Mulher)pessoa).DefinirVestuario(pecaRoupa);
+
                             pessoa.SetarAnoNascimento(anoNascimentoFornecido);
                             Console.WriteLine(pessoa.ToString());
                         }
@@ -43,6 +49,11 @@ namespace classe
                         {
                             nomeFornecido = PerguntaNome();
                             anoNascimentoFornecido = PerguntasAnoNascimento();
+
+                            PecaRoupa peca = new PecaRoupa();
+
+                            pecaRoupa = PerguntaTipoVestuario(peca);
+                            pecaRoupa = PerguntaCorVestuario(peca);
 
                             pessoa = new Homem(nomeFornecido);
                             pessoa.SetarAnoNascimento(anoNascimentoFornecido);
@@ -88,49 +99,52 @@ namespace classe
 
             return anoNascimento;
         }
-        static string PerguntaTipoVestuario()
+        static IPecaRoupa PerguntaTipoVestuario(PecaRoupa peca)
         {
-            Console.WriteLine("Agora, seu vestuário.");
+            Console.WriteLine("\nAgora, seu vestuário.");
             Console.WriteLine("Digite 1 para camisetas | Digite 2 para calça.");
             string escolherVestuario = Console.ReadLine();
-            PecaRoupa peca = new PecaRoupa();
 
             switch (escolherVestuario)
             {
                 case "1":
                     peca.DefinirPecaRoupa(TipoPecaRoupa.camisa);
-                    ;
                     break;
+
                 case "2":
                     peca.DefinirPecaRoupa(TipoPecaRoupa.calça);
                     break;
+
                 default:
                     Console.WriteLine("Este comando não é válido");
                     break;
             }
-            return escolherVestuario;
+            return peca;
         }
-        static string PerguntaCorVestuario()
+        static IPecaRoupa PerguntaCorVestuario(PecaRoupa peca)
         {
-            Console.WriteLine("Digite 1 para branco | Digite 2 para colorido | Digite 3 para preto");
+            Console.WriteLine("\nDigite 1 para branco | Digite 2 para preto | Digite 3 para colorido");
             string escolherCorVestuario = Console.ReadLine();
-            PecaRoupa peca = new PecaRoupa();
+
             switch (escolherCorVestuario)
             {
                 case "1":
                     peca.DefinirCorRoupa(CorPecaRoupa.branca);
                     break;
+
                 case "2":
-                    peca.DefinirCorRoupa(CorPecaRoupa.colorida);
-                    break;
-                case "3":
                     peca.DefinirCorRoupa(CorPecaRoupa.preta);
                     break;
+
+                case "3":
+                    peca.DefinirCorRoupa(CorPecaRoupa.colorida);
+                    break;
+
                 default:
                     Console.WriteLine("Este comando não é válido");
                     break;
             }
-            return escolherCorVestuario;
+            return peca;
         }
     }
 }
