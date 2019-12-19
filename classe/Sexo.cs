@@ -9,7 +9,7 @@ namespace classe
         feminino = 0,
         [Description("Masculino")]
         masculino = 1,
-        [Description("Outro(a)")]
+        [Description("Outro")]
         outro = 2,
     }
 }

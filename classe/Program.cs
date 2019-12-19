@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace classe
 {
@@ -12,11 +14,12 @@ namespace classe
             bool continuePerguntas = true;
             IPecaRoupa pecaRoupa;
 
+
             Console.WriteLine("inicio");
 
             while (continuePerguntas)
             {
-                Console.WriteLine("Digite 1 se for mulher | Digite 2 se for homem: | Digite 3 para sair");
+                Console.WriteLine("Digite 1 se for mulher | Digite 2 se for homem: | Digite 3 para sair | 4 mostrar dados do banco");
                 string escolhaHomemMulher = Console.ReadLine();
 
                 switch (escolhaHomemMulher)
@@ -32,10 +35,14 @@ namespace classe
                             pecaRoupa = PerguntaTipoVestuario(peca);
                             pecaRoupa = PerguntaCorVestuario(peca);
 
+
                             pessoa = new Mulher(nomeFornecido);
                             ((Mulher)pessoa).DefinirVestuario(pecaRoupa);
 
                             pessoa.SetarAnoNascimento(anoNascimentoFornecido);
+
+                            InserirDadosBanco(nomeFornecido, anoNascimentoFornecido, pessoa.Sexo, peca);
+
                             Console.WriteLine(pessoa.ToString());
                         }
                         catch (Exception e)
@@ -55,8 +62,11 @@ namespace classe
                             pecaRoupa = PerguntaTipoVestuario(peca);
                             pecaRoupa = PerguntaCorVestuario(peca);
 
+
                             pessoa = new Homem(nomeFornecido);
                             pessoa.SetarAnoNascimento(anoNascimentoFornecido);
+
+                            InserirDadosBanco(nomeFornecido, anoNascimentoFornecido, pessoa.Sexo, peca);
 
                             Console.WriteLine(pessoa.ToString());
                         }
@@ -68,6 +78,10 @@ namespace classe
 
                     case "3":
                         continuePerguntas = false;
+                        break;
+
+                    case "4":
+                        MostrarDadosBanco();
                         break;
 
                     default:
@@ -144,7 +158,62 @@ namespace classe
                     Console.WriteLine("Este comando não é válido");
                     break;
             }
+
             return peca;
+        }
+
+        static void InserirDadosBanco(string nomeCompleto, int anoNascimento, Sexo sexo, PecaRoupa pecaRoupa)
+        {
+            string caminhoConexao = @"Data Source=DESKTOP-ND48MDH\SQLEXPRESS;Initial Catalog=Pessoa;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+
+            SqlConnection sqlConnection = new SqlConnection(caminhoConexao);
+            sqlConnection.Open();
+            SqlCommand command = new SqlCommand();
+            command.Connection = sqlConnection;
+
+            command.CommandText = "INSERT INTO Pessoa VALUES (@NOMECOMPLETO, @ANONASCIMENTO, @SEXO, @TIPOPECA, @CORPECA)";
+
+            command.Parameters.AddWithValue("@NOMECOMPLETO", nomeCompleto);
+            command.Parameters.AddWithValue("@ANONASCIMENTO", anoNascimento);
+            command.Parameters.AddWithValue("@SEXO", sexo);
+            command.Parameters.AddWithValue("@TIPOPECA", pecaRoupa.TipoPeca);
+            command.Parameters.AddWithValue("@CORPECA", pecaRoupa.CorPeca);
+
+            command.ExecuteNonQuery();
+
+            sqlConnection.Close();
+        }
+
+        static void MostrarDadosBanco()
+        {
+            string caminhoConexao = @"Data Source=DESKTOP-ND48MDH\SQLEXPRESS;Initial Catalog=Pessoa;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+
+            SqlConnection sqlConnection = new SqlConnection(caminhoConexao);
+            sqlConnection.Open();
+            SqlCommand command = new SqlCommand();
+            command.Connection = sqlConnection;
+            TipoPecaRoupa pecaRoupa;
+            CorPecaRoupa corPeca;
+
+            command.CommandText = "SELECT NomeCompleto, AnoNascimento, Sexo, TipoPeca, CorPeca FROM Pessoa";
+
+            DataTable dataTable = new DataTable();
+            dataTable.Load(command.ExecuteReader());
+
+            for (int i = 0; i < dataTable.Rows.Count; i++)
+            {
+                string nomeCompleto = dataTable.Rows[i][0].ToString();
+                int anoNascimento = Convert.ToInt32(dataTable.Rows[i][1].ToString());
+                Sexo sexo = (Sexo)Enum.Parse(typeof(Sexo), Convert.ToString(dataTable.Rows[i][2]));
+                pecaRoupa = (TipoPecaRoupa)Enum.Parse(typeof(TipoPecaRoupa), Convert.ToString(dataTable.Rows[i][3]));
+                corPeca = (CorPecaRoupa)Enum.Parse(typeof(CorPecaRoupa), Convert.ToString(dataTable.Rows[i][4]));
+                Console.WriteLine($"Nome: {nomeCompleto}, idade: {anoNascimento}, sexo: {sexo}, tipo de peça de roupa: {pecaRoupa} e cor da peça: {corPeca}");
+            }
+
+            if (dataTable.Rows.Count == 0)
+                Console.WriteLine("Ainda não há registros aqui");
+
+            sqlConnection.Close();
         }
     }
 }
