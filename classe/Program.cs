@@ -198,10 +198,10 @@ namespace classe
                 DataRow linha = dataTable.Rows[i];
 
                 string nomeCompleto = linha[0].ToString();
-                int anoNascimento = Convert.ToInt32(dataTable.Rows[i][1].ToString());
-                Sexo sexo = (Sexo)Enum.Parse(typeof(Sexo), (dataTable.Rows[i][2]).ToString());
-                TipoPecaRoupa pecaRoupa = (TipoPecaRoupa)Enum.Parse(typeof(TipoPecaRoupa), (dataTable.Rows[i][3]).ToString());
-                CorPecaRoupa corPeca = (CorPecaRoupa)Enum.Parse(typeof(CorPecaRoupa), (dataTable.Rows[i][4]).ToString());
+                int anoNascimento = Convert.ToInt32(linha[1].ToString());
+                Sexo sexo = (Sexo)Enum.Parse(typeof(Sexo), (linha[2]).ToString());
+                TipoPecaRoupa pecaRoupa = (TipoPecaRoupa)Enum.Parse(typeof(TipoPecaRoupa), (linha[3]).ToString());
+                CorPecaRoupa corPeca = (CorPecaRoupa)Enum.Parse(typeof(CorPecaRoupa), (linha[4]).ToString());
 
                 Console.WriteLine($"Nome:{nomeCompleto}, idade: {anoNascimento}, sexo: {sexo}, tipo de peça de roupa: {pecaRoupa} e cor da peça: {corPeca}");
             }
