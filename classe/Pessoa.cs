@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SqlClient;
 
 namespace classe
 {
@@ -9,6 +10,8 @@ namespace classe
         public Sexo Sexo { get; protected set; }
         public int Idade { get; private set; }
         public PecaRoupa PecaRoupas { get; protected set; }
+        public SqlConnection SqlConnection { get; set; }
+        public SqlCommand Command { get; set; }
         public void SetarAnoNascimento(int anoNascimento)
         {
             ValidarIdade(anoNascimento);

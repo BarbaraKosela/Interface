@@ -6,8 +6,17 @@ namespace classe
 {
     class Program
     {
+        public static SqlConnection sql;
+        public static SqlCommand cmd;
+        public const string caminhoConexao = @"Data Source=DESKTOP-ND48MDH\SQLEXPRESS;Initial Catalog=Pessoa;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         static void Main(string[] args)
         {
+            sql = new SqlConnection(caminhoConexao);
+            sql.Open();
+
+            cmd = new SqlCommand();
+            cmd.Connection = sql;
+
             Pessoa pessoa;
             string nomeFornecido;
             int anoNascimentoFornecido;
@@ -89,6 +98,8 @@ namespace classe
                         break;
                 }
             }
+            sql.Close();
+
             Console.WriteLine("fim");
             Console.ReadLine();
         }
@@ -164,56 +175,41 @@ namespace classe
 
         static void InserirDadosBanco(string nomeCompleto, int anoNascimento, Sexo sexo, PecaRoupa pecaRoupa)
         {
-            string caminhoConexao = @"Data Source=DESKTOP-ND48MDH\SQLEXPRESS;Initial Catalog=Pessoa;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            cmd.CommandText = "INSERT INTO Pessoa VALUES (@NOMECOMPLETO, @ANONASCIMENTO, @SEXO, @TIPOPECA, @CORPECA)";
 
-            SqlConnection sqlConnection = new SqlConnection(caminhoConexao);
-            sqlConnection.Open();
-            SqlCommand command = new SqlCommand();
-            command.Connection = sqlConnection;
+            cmd.Parameters.AddWithValue("@NOMECOMPLETO", nomeCompleto);
+            cmd.Parameters.AddWithValue("@ANONASCIMENTO", anoNascimento);
+            cmd.Parameters.AddWithValue("@SEXO", sexo);
+            cmd.Parameters.AddWithValue("@TIPOPECA", pecaRoupa.TipoPeca);
+            cmd.Parameters.AddWithValue("@CORPECA", pecaRoupa.CorPeca);
 
-            command.CommandText = "INSERT INTO Pessoa VALUES (@NOMECOMPLETO, @ANONASCIMENTO, @SEXO, @TIPOPECA, @CORPECA)";
-
-            command.Parameters.AddWithValue("@NOMECOMPLETO", nomeCompleto);
-            command.Parameters.AddWithValue("@ANONASCIMENTO", anoNascimento);
-            command.Parameters.AddWithValue("@SEXO", sexo);
-            command.Parameters.AddWithValue("@TIPOPECA", pecaRoupa.TipoPeca);
-            command.Parameters.AddWithValue("@CORPECA", pecaRoupa.CorPeca);
-
-            command.ExecuteNonQuery();
-
-            sqlConnection.Close();
+            cmd.ExecuteNonQuery();
         }
 
         static void MostrarDadosBanco()
         {
-            string caminhoConexao = @"Data Source=DESKTOP-ND48MDH\SQLEXPRESS;Initial Catalog=Pessoa;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-
-            SqlConnection sqlConnection = new SqlConnection(caminhoConexao);
-            sqlConnection.Open();
-            SqlCommand command = new SqlCommand();
-            command.Connection = sqlConnection;
-            TipoPecaRoupa pecaRoupa;
-            CorPecaRoupa corPeca;
-
-            command.CommandText = "SELECT NomeCompleto, AnoNascimento, Sexo, TipoPeca, CorPeca FROM Pessoa";
+            cmd.CommandText = "SELECT NomeCompleto, AnoNascimento, Sexo, TipoPeca, CorPeca FROM Pessoa";
 
             DataTable dataTable = new DataTable();
-            dataTable.Load(command.ExecuteReader());
+            dataTable.Load(cmd.ExecuteReader());
 
             for (int i = 0; i < dataTable.Rows.Count; i++)
             {
-                string nomeCompleto = dataTable.Rows[i][0].ToString();
+                DataRow linha = dataTable.Rows[i];
+
+                string nomeCompleto = linha[0].ToString();
                 int anoNascimento = Convert.ToInt32(dataTable.Rows[i][1].ToString());
-                Sexo sexo = (Sexo)Enum.Parse(typeof(Sexo), Convert.ToString(dataTable.Rows[i][2]));
-                pecaRoupa = (TipoPecaRoupa)Enum.Parse(typeof(TipoPecaRoupa), Convert.ToString(dataTable.Rows[i][3]));
-                corPeca = (CorPecaRoupa)Enum.Parse(typeof(CorPecaRoupa), Convert.ToString(dataTable.Rows[i][4]));
-                Console.WriteLine($"Nome: {nomeCompleto}, idade: {anoNascimento}, sexo: {sexo}, tipo de peça de roupa: {pecaRoupa} e cor da peça: {corPeca}");
+                Sexo sexo = (Sexo)Enum.Parse(typeof(Sexo), (dataTable.Rows[i][2]).ToString());
+                TipoPecaRoupa pecaRoupa = (TipoPecaRoupa)Enum.Parse(typeof(TipoPecaRoupa), (dataTable.Rows[i][3]).ToString());
+                CorPecaRoupa corPeca = (CorPecaRoupa)Enum.Parse(typeof(CorPecaRoupa), (dataTable.Rows[i][4]).ToString());
+
+                Console.WriteLine($"Nome:{nomeCompleto}, idade: {anoNascimento}, sexo: {sexo}, tipo de peça de roupa: {pecaRoupa} e cor da peça: {corPeca}");
             }
 
             if (dataTable.Rows.Count == 0)
                 Console.WriteLine("Ainda não há registros aqui");
 
-            sqlConnection.Close();
+            cmd.ExecuteNonQuery();
         }
     }
 }
